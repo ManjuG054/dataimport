@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FDS</title>
+    
+    <script>
+      const arr = {
+  0: "Click on Start Import Button to initiate the process",
+  25: "Fetching Files from Google Drive...",
+  50: "Uploading files to FTS+...",
+  75: "Processing files in SAP",
+  100: "Files deliverd to PCE ✅",
+};
+
+var newWindow;
+
+function start() {
+  const progressEl = document.querySelector(".progress-bar");
+  const statusTextEl = document.querySelector(".status-text");
+  const startBtn = document.querySelector(".btn-start");
+  const iconBorderSelector = document.querySelectorAll(".google-drive-wrapper");
+  const arrowSelector = document.querySelectorAll(".arrow");
+  let initialWidth = 0;
+  let incWidth = 25;
+  let cWidth = 0;
+
+  startBtn.disabled = true;
+
+  var interval = setInterval(() => {
+    cWidth = initialWidth + incWidth;
+    progressEl.style.width = `${cWidth}%`;
+
+    statusTextEl.innerText = `${arr[cWidth]}`;
+    initialWidth = cWidth;
+
+    switch (cWidth) {
+      case 25:
+        console.log(iconBorderSelector);
+        iconBorderSelector[0].style.border = '2px solid var(--clr-primary-low-nav-bg)';
+
+        arrowSelector[0].style.backgroundColor = 'var(--clr-primary-low-nav-bg)';
+        arrowSelector[1].style.borderLeftColor = 'var(--clr-primary-low-nav-bg)';
+        break;
+      case 50:
+        iconBorderSelector[1].style.border = '2px solid var(--clr-primary-low-nav-bg)';
+
+        
+        //openWindow();
+        break;
+      case 75:
+        
+        arrowSelector[2].style.backgroundColor = 'var(--clr-primary-low-nav-bg)';
+        arrowSelector[3].style.borderLeftColor = 'var(--clr-primary-low-nav-bg)';
+        //closeWindow();
+        break;
+      case 100:
+        iconBorderSelector[2].style.border = '2px solid var(--clr-primary-low-nav-bg)';
+        clearInterval(interval);
+        
+        setTimeout(() => {
+            startBtn.disabled = false;
+        }, 600);
+        break;
+
+      default:
+        break;
+    }
+  }, 2000);
+}
+
+
+function openWindow() {
+    //console.log('open winddow');
+    newWindow = window.open("http://127.0.0.1:5500/home.html", "", "width=200,height=100");
+    //console.log({newWindow});
+  
+  }
+  
+  function closeWindow() {
+    //console.log({newWindow});
+    //console.log('closeWindow');
+     newWindow.close()
+  }
+
+async function apiCall() {
+  try {
+    const resp = await fetch("https://www.google.com/");
+    console.log(resp);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+    </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;1,300&display=swap');
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  :root{
+    --clr-primary-text: blue;
+    --clr-secondary-text: lightblue;
+    --clr-primary-bg: rgb(2, 139, 173);
+    --clr-secondary-bg: rgb(238, 236, 236);
+    --clr-primary-nav-bg: rgb(7,26,61);
+    --clr-primary-low-nav-bg: rgba(42, 73, 136, 0.993);
+    --clr-secondary-nav-bg: rgb(14, 49, 114);
+    --padding-inline-header: .8rem;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  ol, ul {
+    list-style: none;
+  }
+  
+  img {
+    height: auto;
+  }
+
+
+  body{
+    background-color: var(--clr-secondary-bg);
+  }
+
+  header{
+    height: 8vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    padding-inline: var(--padding-inline-header);
+    background-color: var(--clr-primary-nav-bg);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+
+  header img.nav-logo{
+    width: 150px;
+  }
+
+  footer{
+    width: 100vw;
+    height: 2vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--clr-primary-nav-bg);
+    position: fixed;
+    bottom: 0;
+    color: white;
+    padding: var(--padding-inline-header);
+    font-weight: 500;
+    font-size: small;
+
+  }
+
+  main{
+    margin: 1rem 25rem;
+    margin-top: 5rem;
+  }
+
+  @media only screen and (max-width: 1550px) {
+  main {
+    margin-inline: 15rem;
+  }
+}
+
+  section.stages{
+    display: flex;
+    justify-content: space-between;
+  }
+
+section button.btn-start{
+    appearance: button;
+    font-weight: 600;
+    backface-visibility: hidden;
+    background-color: var(--clr-secondary-nav-bg);
+    border-radius: 6px;
+    border-width: 0;
+    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+    font-size: 100%;
+    height: 44px;
+    line-height: 1.15;
+    margin: 12px 0 0;
+    outline: none;
+    overflow: hidden;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transform: translateZ(0);
+    transition: all .2s,box-shadow .08s ease-in;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 15rem;
+}
+
+section button.btn-start:hover, section button.btn-start:hover {
+    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+}
+
+
+section button.btn-start:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.stages .img-google-drive{
+    width: 120px;
+}
+
+.google-drive-wrapper{
+    padding: 2rem;
+    border-radius: 8px;
+    border: 2px dashed gray;
+}
+
+.icon-in-active{
+  padding: 2rem;
+    border-radius: 8px;
+    border: 2px solic gray;
+}
+
+.bg-success {
+  /* background-color: #28a745!important; */
+  background-color: var(--clr-primary-low-nav-bg) !important;
+}
+
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.action{
+    margin-top: 2rem;
+}
+.progress-wrapper{
+    margin-top: 2rem;
+}
+.progress{
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    background-color: #b3b3b3;
+    border-radius: 0.60rem;
+}
+
+.progress-bar{
+    transition: width .6s linear;
+    width: 0px;
+  }
+
+  .status-text{
+    min-height: 25px;
+  }
+
+  .arrow-wrapper{
+    display: flex;
+    gap: 0;
+    align-items: center;
+  }
+
+  .arrow-left{
+    background-color:  rgb(189, 189, 189);
+    width: 60px;
+    height: 14px;
+  }
+
+  .arrow-right{
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid rgb(189, 189, 189);
+    width: 0;
+    height: 0;
+  }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img
+        class="nav-logo"
+        src="https://www.airbus.com/themes/custom/airbus_web_experience_ui/logo.svg"
+        alt="airbus-logo"
+      />
+    </header>
+    <main>
+      <div class="container">
+        <section class="stages">
+          <div class="google-drive-wrapper">
+            <img
+              class="img-google-drive"
+              src="https://lh3.googleusercontent.com/pw/AIL4fc86MDWsPtNSZU5za66bgnLjcYFdv47PG_k-ydCknlB4nWQjZWxi2bfyDAjcXfaqiq-vJ6A83iOl23gWYdu1F5E_ae0lBG4d2m8ZQ5sFkpDQ0ENfF77KxTSPM0MblHToWBEdXcjA4SUlvON0KVYioZhd1jnwE8ZK5FnPgChwCO1G6jBVjEx2x1l40rTXxay-aZLGUjHPaCJowi9ir0SMGPVQAkgvpbdPZGPcz5PJOblJW0JjLpVNpc8aGxbvtSUX6tpaEGsck5GfhnCmjfXplHRXLTm_zRD8fnxx3yoTiRP5yfziNpdkzEgyynjqhnKMieT09MrwrsJQZmr9HDYbuxtAp71qdml4jQ4H6LPyGRV1ZoyrGwVLrpKDA319OLJkEbZoN7HuPb3vWa2EVog3jFzRnzI4YA2Odw1YBFk938Pm1wDnNOPSRzSlGoZ-VhyOvaPLEQOTjNjRUIqTB0ZZPrVD0W-Qdocu7kRF9gHGoYcNxL8FYe6Mmr8URQb947s1vnJ9iC_fz8nooQRIXkiUnMCv74d5-6LbeyRD9cG6GDUCeQJMxoUc6T6_gB3VHe4zLSoxgYbL6tcgBGewzOUBKIuQ2vVgKm7Uec1OYaIRjF7zddUdKeC_3mknzpTSOXHekg9koTP_ATTECsWBpcIeWQPKaAbAph5T6VAwdcxeEZbSsd39XT7pxhc0UsGK6MkV7pzz1gAQOa_RlFmNYFlDs5oDzbycm4mOwPS0z-dFPQLHjiylIFmqXSHkoTPRF5pWyauMywp1i7OuyOIyOLq-Q4nhU_ZKRLbnG6pghaeXxU51nMV6tzo4l8b8Ulp3C8JvA8H8j3Y6sZWPeGk58iejqV4uPdrx8_YPUAjTkDOBefYFPTQMhYq8PYcZ4mMU2V4nlWMDsEKu44jiau5bzma7J2qNl__JhOJT33EmJH8CKw6OLgnfQYgXsK1jpOz3oAYD=w955-h955-s-no?authuser=0"
+              alt="google drive"
+            />
+          </div>
+          <div class="arrow-wrapper">
+            <div class="arrow arrow-left"></div>
+            <div class="arrow arrow-right"></div>
+          </div>
+          
+
+          <div class="google-drive-wrapper">
+            <img
+              class="img-google-drive"
+              src="https://lh3.googleusercontent.com/pw/AIL4fc9TD4WyXyK0BqFc9rZS9-HVQwTZC6fPkl0i-VcASO3qLEbeFVzOuUUlvEGLayIfyhWgPEIPcmKUrAMMwF7b23UZI-RDp0K8CgkD1xmrYW5M1Dtpb311VGS1B_X0d2sL5FqPLO9bAaT4P3fK6I4C1kFGfgOX64m_Koti6bgweIjhiZf9pkC5BkHypB2yqvwiuvfnYpR2AMn9vkms7Jazmii8kUhEj18xtP3SIMTUhr8rdwerNxCOT_a6lFaYMJ_L-dYQ3XIYXdr7yDqeg8oWeL2EDyz6pv7fvQf0yVpQ5zAd6s1q26ARnOO4DRZ4HhS-n-moe22ZviAirQTxJbISYrDwDo5aHWqOeOGsl9tt94Sxq2ck-vFiNS7U_EnleMe_eDx3Xbzz3tR84YCYmqI341SPP9oj7-jjKtEclwn1ws4ZFP0-2jjlII2XmDWVr3I-WKltdhtXJJE6GSDov7l7x506ssmPdcktR5w4pvp-lo1JHdgkE_MOdShkYzJxyCLd6e3C-in3yUvvfMN997angFQSQEo6as4VhUx3gPVgG_p7LltNKKT8g7VTPGcsyebHQgyIG4Nu2vXbNg0o-fUCyr0cXk0QT4Lq4GSHC61-xDImBo8QXuwXHz8bIh9lTM_J4HIlBlgrpBAgpWWM1GHBs2vCruwhTeDx9NCLI2PUXf0TXJDJqhLDvTaMGPeROsoqkvMclojPCVP2LEhTruyC-mczf4s9o_8P00WHf3OAkHKLDalqU0vbnNq4vOZbTSuFaPrmHGTE3ZzC-bRSmSGym2mSRZWM45J0zXvPtSsUiVZuRm9w0DiEJvgnBUGFmRC-7lGdA41kTRiKLLTCldzVs0LsSiRlN83VlUbUOY6hhwlHXS5F_CgvqCGj-V2gYn-GuWQmRvjrl1lGfOFp_cVAbPfrjEbG5CHivbMt-JXRZf7beFUBg1QlsFHj_VZSwgyk=w1698-h955-s-no?authuser=0"
+              alt="SAP"
+              srcset=""
+            />
+          </div>
+          <div class="arrow-wrapper">
+            <div class="arrow arrow-left"></div>
+            <div class="arrow arrow-right"></div>
+          </div>
+
+          <div class="google-drive-wrapper">
+            <img
+              class="img-google-drive"
+              src="https://lh3.googleusercontent.com/pw/AIL4fc-K7Npi07LztEgDQhC1FARaVdUZANqsKOzR-q_hB1ZtHOR-Cu24_sSYl-S0w-Uea0FruUIDAn5Ud39MQhXjiXm01ZyR1YebnIth61geg5tuJS-XRI0B8e6QGwiNImiqUkqRSyYwomYp8mMAIGuPyH7cFuiBcFXTrgzBz6HS_89__xQTvzlPxSJiEfJrOSK1GbjjuAWYa5NzWlkd3NkshwCE39fXK9D0UvCGi5kOHf4MNhQxB5MUgYxEQwE4RNxkfimrUvAkfNUi_7EuIieO338eFLueEOP45g1QzRpcyd3FKOJaOqbL0BI624TYuXzK-I7dK2zDHnhww0jpyLMmILp2uWNLbA41IO4n_71_KYBlv4VohI3rcwarpX2ixJKWUDYUtHHYAnYPzc98soOzyLxwbPwJXvHcgG4sdzhDVuqk3ginRlcv1ixXPBbybVOSVBAsDdVBh1iIu0dezhdzhyVj1v5QbySkUlgYhBJPSc7qgnHOTUEU_dw8vyAy0YyVAdpBi-BOqji2thXhHJkchBCNy33cN0GKxDZv8zeJzVtPA_ShpPFsZkv9XRTRzjs7HpU76qS4GSKlAkyVprfDBXyHxxrGJl-Ca85MzXRF0tGzXbVvtReKWqKFPCjZPw0_6zI7b6q_x40z_GQSYWSm77FSwnIgxoOwsfjiCD8aS-OWM8Ciqo6FkrDJlpR_RyNXNrkr7DJjw4T5dYgD5hLmAYECFdtZk_9gLFomVbPosww3tek-p1-m3eHXCQt9_q9-ZJ46qFfwNEd9V4wvS1I-0_F3m0S4bMJn7U5SHw7040_w8DB-Nvsy9yEPnGUVbmxKvQHXLD8nZL8-d6tq3ONR917G233YvGkAKU3BdPf3Gnj-IRgpzOZ5gJkxxMMusIE7MqeeGdx-WXJLVwPJW5FjN_U3rq-92-pO77QBOrM5yZPiBxxx5mqCGHnDA8RzaxSH=w387-h375-s-no?authuser=0"
+              alt="Amazon S3"
+              srcset=""
+            />
+          </div>
+        </section>
+
+
+        <section class="progress-wrapper">
+          <div class="progress mb-3">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+            >
+            </div>
+          </div>
+          <p class="status-text">Click on below button to start the process</p>
+        </section>
+
+        
+        <section class="action">
+            <button class="btn-start" role="button" onclick="start()">Start Import</button>
+          </section>
+      </div>
+
+
+    </main>
+    <footer>v0.0.1</footer>
+  </body>
+</html>
