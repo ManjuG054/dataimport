@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FDS</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./index.js"></script>
+  </head>
+  <body>
+    <header>
+      <img
+        class="nav-logo"
+        src="https://www.airbus.com/themes/custom/airbus_web_experience_ui/logo.svg"
+        alt="airbus-logo"
+      />
+      <p class="active-user"> <?= activeUser ?></p>
+    </header>
+    <main>
+      <div class="container">
+        <section class="stages">
+          <div class="google-drive-wrapper">
+            <img
+              class="img-google-drive"
+              src="assets/images/google_drive_logo.png"
+              alt="google drive"
+              srcset=""
+            />
+          </div>
+          <div class="arrow-wrapper">
+            <div class="arrow arrow-left"></div>
+            <div class="arrow arrow-right"></div>
+          </div>
+          
+
+          <div class="google-drive-wrapper">
+            <img
+              class="img-google-drive"
+              src="assets/images/sap_logo.png"
+              alt="google drive"
+              srcset=""
+            />
+          </div>
+          <div class="arrow-wrapper">
+            <div class="arrow arrow-left"></div>
+            <div class="arrow arrow-right"></div>
+          </div>
+
+          <div class="google-drive-wrapper">
+            <img
+              class="img-google-drive"
+              src="assets/images/s3_bucket.png"
+              alt="google drive"
+              srcset=""
+            />
+          </div>
+        </section>
+
+
+        <section class="progress-wrapper">
+          <div class="progress mb-3">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+            >
+            </div>
+          </div>
+          <p class="status-text">Click on below button to start the process</p>
+        </section>
+
+        
+        <section class="action">
+            <button class="btn-start" role="button" onclick="start()">Start Import</button>
+          </section>
+      </div>
+
+
+    </main>
+    <footer>v0.0.1</footer>
+  </body>
+</html>
